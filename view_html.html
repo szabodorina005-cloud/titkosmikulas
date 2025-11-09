@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Titkos Mikulás - Reveal</title>
+</head>
+<body>
+<h1>Titkos Mikulás 🎁</h1>
+<div id="message" style="font-size:1.5em; margin-top:20px;"></div>
+<button id="revealBtn" style="font-size:1.2em; padding:10px; margin-top:20px;">Megmutatom</button>
+
+<script>
+function getTokenFromURL(){
+  const params = new URLSearchParams(window.location.search);
+  return params.get('token');
+}
+
+function reveal(){
+  const token = getTokenFromURL();
+  const mapping = JSON.parse(localStorage.getItem('mapping') || '{}');
+  const name = mapping[token];
+
+  if(name){
+    document.getElementById('message').innerText = `Te húztad: ${name} 🎁`;
+  } else {
+    document.getElementById('message').innerText = 'Érvénytelen token.';
+  }
+  document.getElementById('revealBtn').disabled = true;
+}
+
+document.getElementById('revealBtn').addEventListener('click', reveal);
+
+</script>
+</body>
+</html>
